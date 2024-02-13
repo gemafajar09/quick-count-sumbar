@@ -12,41 +12,29 @@ var socket
 export default function Home() {
   const [suara, setSuara] = useState(0)
   const [total, setTotal] = useState(0)
-  const [partai, setPartai] = useState([])
-  const [suarapartai, setSuarapartai] = useState([])
+
   const [suaraKecamatan, setSuaraKecamatan] = useState([])
+  const [caleg, setCaleg] = useState([])
+  const [suaraCaleg, setSuaraCaleg] = useState([])
   const [suaraCaleg1, setSuaraCaleg1] = useState([])
   const [suaraCaleg2, setSuaraCaleg2] = useState([])
 
-  const [calegDapil1, setCalegDapil1] = useState([])
-  const [calegDapil11, setCalegDapil11] = useState([])
-
-  const [calegDapil2, setCalegDapil2] = useState([])
-  const [calegDapil22, setCalegDapil22] = useState([])
-
-  const [calegDapil3, setCalegDapil3] = useState([])
-  const [calegDapil33, setCalegDapil33] = useState([])
-
-  const [calegDapil4, setCalegDapil4] = useState([])
-  const [calegDapil44, setCalegDapil44] = useState([])
-
-  const [calegDapil5, setCalegDapil5] = useState([])
-  const [calegDapil55, setCalegDapil55] = useState([])
-
-  const [calegDapil6, setCalegDapil6] = useState([])
-  const [calegDapil66, setCalegDapil66] = useState([])
-
-  const [partaiDapil1, setPartaiDapil1] = useState([])
-  const [partaiDapil2, setPartaiDapil2] = useState([])
-  const [partaiDapil3, setPartaiDapil3] = useState([])
-  const [partaiDapil4, setPartaiDapil4] = useState([])
-  const [partaiDapil5, setPartaiDapil5] = useState([])
-  const [partaiDapil6, setPartaiDapil6] = useState([])
+  const [kecamatanCaleg1, setKecamatanCaleg1] = useState([])
+  const [kecamatanCaleg2, setKecamatanCaleg2] = useState([])
+  const [kecamatanCaleg3, setKecamatanCaleg3] = useState([])
+  const [kecamatanCaleg4, setKecamatanCaleg4] = useState([])
+  const [kecamatanCaleg5, setKecamatanCaleg5] = useState([])
+  const [kecamatanCaleg6, setKecamatanCaleg6] = useState([])
+  const [kecamatanCaleg7, setKecamatanCaleg7] = useState([])
+  const [kecamatanCaleg8, setKecamatanCaleg8] = useState([])
+  const [kecamatanCaleg9, setKecamatanCaleg9] = useState([])
+  const [kecamatanCaleg10, setKecamatanCaleg10] = useState([])
+  const [kecamatanCaleg11, setKecamatanCaleg11] = useState([])
+  
 
   useEffect(() => {
     jumlahSuara()
-    jumlahSuaraDapilCaleg()
-    jumlahSuaraDapilPartai()
+    jumlahSuaraKecamatan()
   },[suara, total])
 
 
@@ -62,10 +50,8 @@ export default function Home() {
     });
 
     socket.on("event", function (e) {
-      console.log(e);
         jumlahSuara()
-        jumlahSuaraDapilPartai()
-        jumlahSuaraDapilCaleg()
+        jumlahSuaraKecamatan()
     });
 
     return () => {
@@ -78,53 +64,28 @@ export default function Home() {
     .then((res) => {
       setTotal(res.data.suara.total)
       setSuara(res.data.suara.suara)
-      setPartai(res.data.partai)
       //  suara per kecamatan
       setSuaraKecamatan(res.data.suarakecamatan)
-      // suara partai
-      setSuarapartai(res.data.suarapartai)
-      // suara caleg
-      setSuaraCaleg1(res.data.suaracaleg1)
-      setSuaraCaleg2(res.data.suaracaleg2)
+      setCaleg(res.data.caleg)
+      setSuaraCaleg(res.data.suaracaleg)
     })
   }
 
-  const jumlahSuaraDapilCaleg = async () => {
-    await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataTotalSuaraCalegDapil.php`)
+  const jumlahSuaraKecamatan = async () => {
+    await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataSuaraCalegKecamatan.php`)
     .then((res) => {
-      // suara caleg dapil 1 -6
-      setCalegDapil1(res.data.dapilcaleg1)
-      setCalegDapil11(res.data.dapilcaleg11)
-      setCalegDapil2(res.data.dapilcaleg2)
-      setCalegDapil22(res.data.dapilcaleg22)
-      setCalegDapil3(res.data.dapilcaleg3)
-      setCalegDapil33(res.data.dapilcaleg33)
-      setCalegDapil4(res.data.dapilcaleg4)
-      setCalegDapil44(res.data.dapilcaleg44)
-      setCalegDapil5(res.data.dapilcaleg5)
-      setCalegDapil55(res.data.dapilcaleg55)
-      setCalegDapil6(res.data.dapilcaleg6)
-      setCalegDapil66(res.data.dapilcaleg66)
+      setKecamatanCaleg1(res.data.kecamatancaleg1)
+      setKecamatanCaleg2(res.data.kecamatancaleg2)
+      setKecamatanCaleg3(res.data.kecamatancaleg3)
+      setKecamatanCaleg4(res.data.kecamatancaleg4)
+      setKecamatanCaleg5(res.data.kecamatancaleg5)
+      setKecamatanCaleg6(res.data.kecamatancaleg6)
+      setKecamatanCaleg7(res.data.kecamatancaleg7)
+      setKecamatanCaleg8(res.data.kecamatancaleg8)
+      setKecamatanCaleg9(res.data.kecamatancaleg9)
+      setKecamatanCaleg10(res.data.kecamatancaleg10)
+      setKecamatanCaleg11(res.data.kecamatancaleg11)
     })
-  }
-
-  const jumlahSuaraDapilPartai = async () => {
-    await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataTotalSuaraPartaiDapil.php`)
-    .then((res) => {
-      // suara partai dapil 1 -6
-      setPartaiDapil1(res.data.partaidapil1)
-      setPartaiDapil2(res.data.partaidapil2)
-      setPartaiDapil3(res.data.partaidapil3)
-      setPartaiDapil4(res.data.partaidapil4)
-      setPartaiDapil5(res.data.partaidapil5)
-      setPartaiDapil6(res.data.partaidapil6)
-    })
-  }
-
-  const numberFormat = (number) => {
-    return new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
-      number,
-    )
   }
   
   return (
@@ -191,11 +152,11 @@ export default function Home() {
                 <div className="border p-3">
                   <Bar
                       data={{
-                        labels: partai,
+                        labels: caleg,
                         datasets: [
                           {
-                            data: suarapartai,
-                            backgroundColor: ["blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "blue"],
+                            data: suaraCaleg,
+                            backgroundColor: ["yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow","yellow"],
                             borderColor: "white",
                             borderWidth: 1,
 
@@ -215,7 +176,7 @@ export default function Home() {
                           },
                           title: {
                             display: true,
-                            text: 'Total Suara Partai'
+                            text: 'Total Suara Caleg'
                           }
                         }
                       }}
@@ -229,7 +190,7 @@ export default function Home() {
             <div className="grid grid-cols-2 mt-5">
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kota Padang</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Bungus Teluk Kabung</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                     <thead>
                       <tr>
@@ -241,11 +202,11 @@ export default function Home() {
                     </thead>
                     <tbody>
                       {
-                        suaraCaleg1.map((val, i) => (
+                        kecamatanCaleg1.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -255,7 +216,7 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kota Padang</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Lubuk Kilangan</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                   <thead>
                       <tr>
@@ -267,11 +228,11 @@ export default function Home() {
                     </thead>
                     <tbody>
                       {
-                        suaraCaleg2.map((val, i) => (
+                        kecamatanCaleg2.map((val, i) => (
                           <tr key={i}>
-                            <td className="text-center">{i+26}</td>
+                            <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -282,30 +243,28 @@ export default function Home() {
 
             </div>
           </div>
-          {/* suara dapil caleg */}
+
           <div>
             <div className="grid grid-cols-2 mt-5">
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil I</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Lubuk Begalung</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                     <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil1.map((val, i) => (
+                        kecamatanCaleg3.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -315,25 +274,23 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil I</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Selatan</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                   <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil11.map((val, i) => (
+                        kecamatanCaleg4.map((val, i) => (
                           <tr key={i}>
-                            <td className="text-center">{i+26}</td>
+                            <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -342,33 +299,30 @@ export default function Home() {
                   </table>
                 </div>
 
-
             </div>
           </div>
-
+          
           <div>
             <div className="grid grid-cols-2 mt-5">
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil II</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Timur</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                     <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil2.map((val, i) => (
+                        kecamatanCaleg5.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -378,25 +332,23 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil II</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Barat</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                   <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil22.map((val, i) => (
+                        kecamatanCaleg6.map((val, i) => (
                           <tr key={i}>
-                            <td className="text-center">{i+26}</td>
+                            <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -405,33 +357,88 @@ export default function Home() {
                   </table>
                 </div>
 
-
             </div>
           </div>
-
+          
           <div>
             <div className="grid grid-cols-2 mt-5">
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil III</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Utara</span>
+                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
+                    <thead>
+                      <tr>
+                        <th className="border border-slate-600">No</th>
+                        <th className="border border-slate-600">Nama Caleg</th>
+                        <th className="border border-slate-600">Partai</th>
+                        <th className="border border-slate-600">Total Suara</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        kecamatanCaleg7.map((val, i) => (
+                          <tr key={i}>
+                            <td className="text-center">{i+1}</td>
+                            <td className="text-left">{val.nama_caleg}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
+                            <td className="text-center">{val.total}</td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="border row-span-2 p-3">
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Naggalo</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                   <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil3.map((val, i) => (
+                        kecamatanCaleg8.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
+                            <td className="text-center">{val.total}</td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+          </div>
+          
+          <div>
+            <div className="grid grid-cols-2 mt-5">
+
+                <div className="border row-span-2 p-3">
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Kuranji</span>
+                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
+                    <thead>
+                      <tr>
+                        <th className="border border-slate-600">No</th>
+                        <th className="border border-slate-600">Nama Caleg</th>
+                        <th className="border border-slate-600">Partai</th>
+                        <th className="border border-slate-600">Total Suara</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        kecamatanCaleg9.map((val, i) => (
+                          <tr key={i}>
+                            <td className="text-center">{i+1}</td>
+                            <td className="text-left">{val.nama_caleg}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -441,25 +448,23 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil III</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Pauh</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                   <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil33.map((val, i) => (
+                        kecamatanCaleg10.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -468,33 +473,30 @@ export default function Home() {
                   </table>
                 </div>
 
-
             </div>
           </div>
-
+          
           <div>
             <div className="grid grid-cols-2 mt-5">
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil IV</span>
+                  <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Koto Tangah</span>
                   <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
                     <thead>
                       <tr>
                         <th className="border border-slate-600">No</th>
                         <th className="border border-slate-600">Nama Caleg</th>
                         <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
                         <th className="border border-slate-600">Total Suara</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        calegDapil4.map((val, i) => (
+                        kecamatanCaleg11.map((val, i) => (
                           <tr key={i}>
                             <td className="text-center">{i+1}</td>
                             <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
+                            <td className="text-left">{val.nama_kecamatan}</td>
                             <td className="text-center">{val.total}</td>
                           </tr>
                         ))
@@ -504,343 +506,11 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil IV</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Nama Caleg</th>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        calegDapil44.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
+                  
                 </div>
-
 
             </div>
           </div>
-
-          <div>
-            <div className="grid grid-cols-2 mt-5">
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil V</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Nama Caleg</th>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        calegDapil5.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil V</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Nama Caleg</th>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        calegDapil55.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-
-            </div>
-          </div>
-
-          <div>
-            <div className="grid grid-cols-2 mt-5">
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil VI</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Nama Caleg</th>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        calegDapil6.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Caleg Terbanyak Per Dapil VI</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Nama Caleg</th>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        calegDapil66.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.nama_caleg}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-
-            </div>
-          </div>
-          {/* tutup suara dapil caleg */}
-
-          {/* suara dapil partai */}
-          <div>
-            <div className="grid grid-cols-2 mt-5">
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil I</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil1.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil II</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil2.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-
-            </div>
-          </div>
-
-          <div>
-            <div className="grid grid-cols-2 mt-5">
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil III</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil3.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil IV</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil4.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-
-            </div>
-          </div>
-
-          <div>
-            <div className="grid grid-cols-2 mt-5">
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil V</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil5.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Suara Partai Terbanyak Per Dapil VI</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Partai</th>
-                        <th className="border border-slate-600">No</th>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        partaiDapil6.map((val, i) => (
-                          <tr key={i}>
-                            <td className="text-center">{i+1}</td>
-                            <td className="text-left">{val.partai}</td>
-                            <td className="text-left">{val.kecamatan}</td>
-                            <td className="text-center">{val.total}</td>
-                          </tr>
-                        ))
-                      }
-                    </tbody>
-                  </table>
-                </div>
-
-
-            </div>
-          </div>
-          {/* tutup dapil partai */}
-
       </Carousel>
         
     </div>

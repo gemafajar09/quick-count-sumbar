@@ -12,38 +12,30 @@ import { Select } from 'antd';
 import { faSignOut, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Admin() {
-    const [namaKecamatan, setNamaKecamatan] = useState()
     // untuk inputan
     const [idcaleg, setIdcaleg] = useState("")
+    const [idKecamatan, setIdkecamatan] = useState("")
     const [idkelurahan, setIdkelurahan] = useState("")
     const [notps, setNotps] = useState("")
     const [suara, setSuara] = useState("")
 
     // unutk data user yg login
     const [idUser, setIdUser] = useState()
-    const [idKec, setIdKec] = useState()
     var id
-    var nama
-    var idKecamatans
 
     const [caleg, setCaleg] = useState([])
     const [kelurahan, setKelurahan] = useState([])
+    const [kecamatan, setKecamatan] = useState([])
     const [data, setData] = useState([])
 
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         id = localStorage.getItem("id_user")
-        idKecamatans = localStorage.getItem("id_kecamatan")
-        nama = localStorage.getItem("nama_user")
-
-
-        setNamaKecamatan(localStorage.getItem("nama_kecamatan"))
         setIdUser(localStorage.getItem("id_user"))
-        setIdKec(localStorage.getItem("id_kecamatan"))
 
         getNamaCaleg()
-        getKelurahan()
+        getKecamatan()
         getDataInputan(id)
 
         if (!localStorage.getItem("id_user")) {
@@ -77,7 +69,17 @@ export default function Admin() {
         })
     }
 
-    const getKelurahan = async () => {
+    const getKecamatan = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_URL}/kecamatan.php`)
+            .then((res) => {
+                setKecamatan(res.data.kecamatan)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const getKelurahan = async (idKecamatans) => {
         await axios.get(`${process.env.NEXT_PUBLIC_URL}/kelurahan.php?id_kecamatan=${idKecamatans}`)
             .then((res) => {
                 setKelurahan(res.data.kelurahan)
@@ -108,6 +110,10 @@ export default function Admin() {
             errors.idkelurahan = '* Wajib Di Isi.';
         }
 
+        if (!idKecamatan) {
+            errors.idKecamatan = '* Wajib Di Isi.';
+        }
+
         if (!notps) {
             errors.notps = '* Wajib Di Isi.';
         }
@@ -128,7 +134,7 @@ export default function Admin() {
         axios.post(`${process.env.NEXT_PUBLIC_URL}/simpanDataInputan.php`, {
             "id_caleg": idcaleg,
             "id_kelurahan": idkelurahan,
-            "id_kecamatan": idKec,
+            "id_kecamatan": idKecamatan,
             "no_tps": notps,
             "suara": suara,
             "id_user": idUser
@@ -179,6 +185,7 @@ export default function Admin() {
     const clearInputan = () => {
         setIdcaleg("")
         setIdkelurahan("")
+        setIdkecamatan("")
         setNotps("")
         setSuara("")
     }
@@ -189,6 +196,11 @@ export default function Admin() {
 
     const handleSelectChangekelurahan = (selectedOption) => {
         setIdkelurahan(selectedOption);
+    };
+
+    const handleSelectChangekecamatan = (selectedOption) => {
+        setIdkecamatan(selectedOption);
+        getKelurahan(selectedOption)
     };
 
     const handlerHapusSuara = (record) => {
@@ -205,7 +217,8 @@ export default function Admin() {
                 axios.get(`${process.env.NEXT_PUBLIC_URL}/hapusDataSuara.php?id=${record.id}`)
                 .then((res) => {
                     if(res.data.pesan){
-                        getDataInputan()
+                        var idd = localStorage.getItem("id_user")
+                        getDataInputan(idd)
                         socket.emit("event", {
                             name: "KIRIM_DATA",
                             payload: true,
@@ -235,14 +248,19 @@ export default function Admin() {
 
     const columns = [
         {
-            title: 'Kelurahan',
-            dataIndex: 'kelurahan',
-            key: 'kelurahan'
-        },
-        {
             title: 'Nama Caleg',
             dataIndex: 'nama_caleg',
             key: 'nama_caleg'
+        },
+        {
+            title: 'Kecamatan',
+            dataIndex: 'kecamatan',
+            key: 'kecamatan'
+        },
+        {
+            title: 'Kelurahan',
+            dataIndex: 'kelurahan',
+            key: 'kelurahan'
         },
         {
             title: 'No TPS',
@@ -290,7 +308,6 @@ export default function Admin() {
                 <button onClick={() => logOut()} type="button" className='rounded-full bg-gray-400 text-white w-10 h-10 hover:bg-gray-200'><FontAwesomeIcon icon={faSignOut}/></button>
             </div>
             <div className="container mx-auto md:mt-11 mt-3">
-                <div className="w-full text-2xl font-bold mb-5">Data Kecamatan : {namaKecamatan}</div>
                 <div className="grid md:grid-cols-3 grid-cols-1 md:h-[700px]">
                     <div className="p-5 border rounded-l-xl pt-5 pb-5 ">
                         <span className='text-xl font-bold'>Entry Data</span>
@@ -311,6 +328,24 @@ export default function Admin() {
                                 }
                                 onChange={handleSelectChange}
                                 options={caleg} />
+                        </div>
+                        <div className="mt-5">
+                            <label htmlFor="Kelurahan">Entry Kecamatan <span className='text-red-500 text-sm'>{errors.idkecamatan}</span></label>
+
+                            <Select
+                                showSearch
+                                popupMatchSelectWidth={false}
+                                listHeight={250}
+                                className='w-full mt-3'
+                                value={idKecamatan}
+                                optionFilterProp="children"
+                                filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
+                                filterSort={(optionA, optionB) => {
+                                    optionA?.label.toLowerCase().localeCompare(optionB?.label.toLowerCase())
+                                }}
+                                onChange={handleSelectChangekecamatan}
+                                options={kecamatan} />
+
                         </div>
                         <div className="mt-5">
                             <label htmlFor="Kelurahan">Entry Kelurahan <span className='text-red-500 text-sm'>{errors.idkelurahan}</span></label>
@@ -335,6 +370,7 @@ export default function Admin() {
                             <label htmlFor="TPS">Entry Tps <span className='text-red-500 text-sm'>{errors.notps}</span></label>
                             <input value={notps} onChange={(e) => setNotps(e.target.value)} type="number" className="text-xs w-full p-2 rounded-md mt-2 border-1 border-gray-300 outline-1" />
                         </div>
+
                         <div className="mt-5">
                             <label htmlFor="Suara">Entry Suara <span className='text-red-500 text-sm'>{errors.suara}</span></label>
                             <input value={suara} onChange={(e) => setSuara(e.target.value)} type="number" className="text-xs w-full p-2 rounded-md mt-2 border-1 border-gray-300 outline-1" />
@@ -349,12 +385,6 @@ export default function Admin() {
                 </div>
             </div>
             {/* footer */}
-            {/* <div className="md:absolute bottom-0 w-full flex md:justify-center">
-                <div className="md:flex md:justify-center bg-blue-600 w-full p-4">
-                    <span className="text-sm text-white">© 2024 <a href="https://mediatamaweb.co.id" className="hover:underline">Design By Mediaatama Web Indonesia</a>. All Rights Reserved.
-                    </span>
-                </div>
-            </div> */}
         </>
     )
 }
