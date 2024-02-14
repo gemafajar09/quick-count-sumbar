@@ -33,6 +33,7 @@ export default function Home() {
   const [kecamatanCaleg10, setKecamatanCaleg10] = useState([])
   const [kecamatanCaleg11, setKecamatanCaleg11] = useState([])
   
+  const [tps, setTps] = useState([])
 
   useEffect(() => {
     jumlahSuara()
@@ -74,6 +75,8 @@ export default function Home() {
       setSuaraGolkar(res.data.suaraGolkar)
       setProvinsi(res.data.provinsi)
       setSuaraProvinsi(res.data.suaraprov)
+      // suara tps
+      setTps(res.data.totaltps)
     })
   }
 
@@ -586,6 +589,40 @@ export default function Home() {
                 </div>
 
             </div>
+          </div>
+
+          <div>
+            <div className='grid grid-cols-4 mt-5'>
+              <div></div>
+              <div className="border p-3 col-span-2">
+                <span className="text-xl font-bold">Total Suara TPS Per Kecamatan</span>
+                <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
+                  <thead>
+                    <tr>
+                      <th className="border border-slate-600">No</th>
+                      <th className="border border-slate-600">Nama Kecamatan</th>
+                      <th className="border border-slate-600 w-56">Jumlah Tps</th>
+                      <th className="border border-slate-600 w-56">Total Tps</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      tps.map((val, i) => (
+                        <tr key={i}>
+                          <td className="text-center">{i+1}</td>
+                          <td className="text-left">{val.nama_kecamatan}</td>
+                          <td className="text-center">{val.total_tps}</td>
+                          <td className="text-center">{val.jumlah_tps}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div></div>
+
+            </div>
+
           </div>
       </Carousel>
         
