@@ -122,7 +122,7 @@ export default function Home() {
           <Image width={150} height={150} src={"/training.png"} alt="image" />
         </div>
         <div className="flex justify-center items-center">
-          Total Sura Masuk : 
+          Total Suara Masuk : 
           <div className="text-white text-xl bg-blue-500 p-3 ml-5 w-36 text-center rounded-l-xl">{suara}</div>
           <div className="text-white text-xl bg-red-500 p-3 w-36 text-center rounded-r-xl">{total}</div>
         </div>
