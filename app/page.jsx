@@ -176,7 +176,7 @@ export default function Home() {
                           },
                           title: {
                             display: true,
-                            text: 'Total Suara Caleg'
+                            text: ''
                           }
                         }
                       }}
