@@ -18,6 +18,8 @@ export default function Home() {
   const [suaraCaleg, setSuaraCaleg] = useState([])
   const [golkar, setGolkar] = useState([])
   const [suaraGolkar, setSuaraGolkar] = useState([])
+  const [provinsi, setProvinsi] = useState([])
+  const [suaraProvinsi, setSuaraProvinsi] = useState([])
 
   const [kecamatanCaleg1, setKecamatanCaleg1] = useState([])
   const [kecamatanCaleg2, setKecamatanCaleg2] = useState([])
@@ -70,6 +72,8 @@ export default function Home() {
       setSuaraCaleg(res.data.suaracaleg)
       setGolkar(res.data.golkar)
       setSuaraGolkar(res.data.suaraGolkar)
+      setProvinsi(res.data.provinsi)
+      setSuaraProvinsi(res.data.suaraprov)
     })
   }
 
@@ -132,6 +136,44 @@ export default function Home() {
                     datasets: [
                       {
                         data: suaraCaleg,
+                        backgroundColor: ["yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow","yellow"],
+                        borderColor: "white",
+                        borderWidth: 1,
+
+                      },
+                    ]
+                  }}
+                  height={800}
+                  width={600}
+                  options={{
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false,
+                        position: 'right',
+                      },
+                      title: {
+                        display: true,
+                        text: ''
+                      }
+                    }
+                  }}
+                />
+            </div>
+              
+          </div>
+
+          <div>
+              
+            <div className="border p-3">
+              <Bar
+                  data={{
+                    labels: provinsi,
+                    datasets: [
+                      {
+                        data: suaraProvinsi,
                         backgroundColor: ["yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow","yellow"],
                         borderColor: "white",
                         borderWidth: 1,
