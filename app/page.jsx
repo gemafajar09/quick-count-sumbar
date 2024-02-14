@@ -16,8 +16,8 @@ export default function Home() {
   const [suaraKecamatan, setSuaraKecamatan] = useState([])
   const [caleg, setCaleg] = useState([])
   const [suaraCaleg, setSuaraCaleg] = useState([])
-  const [suaraCaleg1, setSuaraCaleg1] = useState([])
-  const [suaraCaleg2, setSuaraCaleg2] = useState([])
+  const [golkar, setGolkar] = useState([])
+  const [suaraGolkar, setSuaraGolkar] = useState([])
 
   const [kecamatanCaleg1, setKecamatanCaleg1] = useState([])
   const [kecamatanCaleg2, setKecamatanCaleg2] = useState([])
@@ -68,6 +68,8 @@ export default function Home() {
       setSuaraKecamatan(res.data.suarakecamatan)
       setCaleg(res.data.caleg)
       setSuaraCaleg(res.data.suaracaleg)
+      setGolkar(res.data.golkar)
+      setSuaraGolkar(res.data.suaraGolkar)
     })
   }
 
@@ -138,7 +140,45 @@ export default function Home() {
                     ]
                   }}
                   height={800}
-                  width={500}
+                  width={600}
+                  options={{
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false,
+                        position: 'right',
+                      },
+                      title: {
+                        display: true,
+                        text: ''
+                      }
+                    }
+                  }}
+                />
+            </div>
+              
+          </div>
+
+          <div>
+              
+            <div className="border p-3">
+              <Bar
+                  data={{
+                    labels: golkar,
+                    datasets: [
+                      {
+                        data: suaraGolkar,
+                        backgroundColor: ["yellow", "yellow"],
+                        borderColor: "white",
+                        borderWidth: 1,
+
+                      },
+                    ]
+                  }}
+                  height={800}
+                  width={600}
                   options={{
                     maintainAspectRatio: false,
                     indexAxis: 'y',
