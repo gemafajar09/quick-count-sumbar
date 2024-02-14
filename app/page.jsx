@@ -122,68 +122,41 @@ export default function Home() {
 
       <Carousel autoplaySpeed={9000} autoplay draggable={true}>
           <div>
-              <div className="grid grid-rows-2 grid-cols-2 mt-5">
               
-                <div className="border row-span-2 p-3">
-                  <span className="text-xl font-bold">Total Suara Masuk Per Kecamatan</span>
-                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
-                    <thead>
-                      <tr>
-                        <th className="border border-slate-600">Kecamatan</th>
-                        <th className="border border-slate-600">Suara Masuk</th>
-                        <th className="border border-slate-600">Total Suara</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+            <div className="border p-3">
+              <Bar
+                  data={{
+                    labels: caleg,
+                    datasets: [
                       {
-                        suaraKecamatan.map((val, i) => (
-                          <tr key={i}>
-                            <td>{val.kecamatan}</td>
-                            <td className="text-center">{val.suara}</td>
-                            <td className="text-center">{val.jumlah_pemilih}</td>
-                          </tr>
-                        ))
-                      }
-                      
-                    </tbody>
-                  </table>
-                </div>
-                
-                <div className="border p-3">
-                  <Bar
-                      data={{
-                        labels: caleg,
-                        datasets: [
-                          {
-                            data: suaraCaleg,
-                            backgroundColor: ["yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow","yellow"],
-                            borderColor: "white",
-                            borderWidth: 1,
+                        data: suaraCaleg,
+                        backgroundColor: ["yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow","yellow"],
+                        borderColor: "white",
+                        borderWidth: 1,
 
-                          },
-                        ]
-                      }}
-                      height={300}
-                      width={500}
-                      options={{
-                        maintainAspectRatio: false,
-                        indexAxis: 'y',
-                        responsive: true,
-                        plugins: {
-                          legend: {
-                            display: false,
-                            position: 'right',
-                          },
-                          title: {
-                            display: true,
-                            text: ''
-                          }
-                        }
-                      }}
-                    />
-                </div>
+                      },
+                    ]
+                  }}
+                  height={800}
+                  width={500}
+                  options={{
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false,
+                        position: 'right',
+                      },
+                      title: {
+                        display: true,
+                        text: ''
+                      }
+                    }
+                  }}
+                />
+            </div>
               
-              </div>
           </div>
 
           <div>
@@ -506,7 +479,28 @@ export default function Home() {
                 </div>
 
                 <div className="border row-span-2 p-3">
-                  
+                  <span className="text-xl font-bold">Total Suara Masuk Per Kecamatan</span>
+                  <table className="table-auto border-separate border-spacing-2 border border-slate-500 w-full mt-3">
+                    <thead>
+                      <tr>
+                        <th className="border border-slate-600">Kecamatan</th>
+                        <th className="border border-slate-600">Suara Masuk</th>
+                        <th className="border border-slate-600">Total Suara</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        suaraKecamatan.map((val, i) => (
+                          <tr key={i}>
+                            <td>{val.kecamatan}</td>
+                            <td className="text-center">{val.suara}</td>
+                            <td className="text-center">{val.jumlah_pemilih}</td>
+                          </tr>
+                        ))
+                      }
+                      
+                    </tbody>
+                  </table>
                 </div>
 
             </div>
