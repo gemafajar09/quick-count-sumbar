@@ -591,7 +591,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* <div>
+          <div>
             <div className='grid grid-cols-4 mt-5'>
               <div></div>
               <div className="border p-3 col-span-2">
@@ -623,7 +623,7 @@ export default function Home() {
 
             </div>
 
-          </div> */}
+          </div>
       </Carousel>
         
     </div>
