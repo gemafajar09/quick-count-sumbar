@@ -603,6 +603,7 @@ export default function Home() {
                       <th className="border border-slate-600">Nama Kecamatan</th>
                       <th className="border border-slate-600 w-56">Jumlah Tps</th>
                       <th className="border border-slate-600 w-56">Total Tps</th>
+                      <th className="border border-slate-600 w-56">Total Suara</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -613,6 +614,7 @@ export default function Home() {
                           <td className="text-left">{val.nama_kecamatan}</td>
                           <td className="text-center">{val.total_tps}</td>
                           <td className="text-center">{val.jumlah_tps}</td>
+                          <td className="text-center">{val.total_suara}</td>
                         </tr>
                       ))
                     }
