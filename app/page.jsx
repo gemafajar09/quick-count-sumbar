@@ -116,15 +116,15 @@ export default function Home() {
               </div>
             </div>
         </div>
-        <div className="flex text-xl justify-center mb-3 font-bold gap-3 items-end">
+        <div className="hidden md:flex text-xl justify-center mb-3 font-bold gap-3 items-end">
           <Image width={180} height={180} src={"/mediatama.png"} alt="image" />
           <Image width={120} height={120} src={"/digital.png"} alt="image" />
           <Image width={150} height={150} src={"/training.png"} alt="image" />
         </div>
-        <div className="flex justify-center items-center">
-          Total Suara Masuk : 
-          <div className="text-white text-xl bg-blue-500 p-3 ml-5 w-36 text-center rounded-l-xl">{suara}</div>
-          <div className="text-white text-xl bg-red-500 p-3 w-36 text-center rounded-r-xl">{total}</div>
+        <div className="md:flex grid md:justify-center items-center">
+          <span className='md:block hidden'>Total Suara Masuk :</span> 
+          <div className="text-white text-xl bg-blue-500 p-3 w-36 text-center md:rounded-l-xl">{suara}</div>
+          <div className="text-white text-xl bg-red-500 p-3 w-36 text-center md:rounded-r-xl">{total}</div>
         </div>
       </div>
       <div className="border-b-2 mt-3 border-gray-500"></div>
@@ -245,7 +245,7 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Bungus Teluk Kabung</span>
@@ -303,7 +303,7 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Lubuk Begalung</span>
@@ -361,7 +361,7 @@ export default function Home() {
           </div>
           
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Timur</span>
@@ -419,7 +419,7 @@ export default function Home() {
           </div>
           
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Padang Utara</span>
@@ -477,7 +477,7 @@ export default function Home() {
           </div>
           
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Kuranji</span>
@@ -535,7 +535,7 @@ export default function Home() {
           </div>
           
           <div>
-            <div className="grid grid-cols-2 mt-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 mt-5">
 
                 <div className="border row-span-2 p-3">
                   <span className="text-xl font-bold">Suara Caleg Terbanyak Kecamatan Koto Tangah</span>
@@ -592,7 +592,7 @@ export default function Home() {
           </div>
 
           <div>
-            <div className='grid grid-cols-4 mt-5'>
+            <div className='grid md:grid-cols-4 mt-5'>
               <div></div>
               <div className="border p-3 col-span-2">
                 <span className="text-xl font-bold">Total Suara TPS Per Kecamatan</span>
