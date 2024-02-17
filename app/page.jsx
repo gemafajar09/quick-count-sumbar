@@ -32,6 +32,34 @@ export default function Home() {
   const [kecamatanCaleg9, setKecamatanCaleg9] = useState([])
   const [kecamatanCaleg10, setKecamatanCaleg10] = useState([])
   const [kecamatanCaleg11, setKecamatanCaleg11] = useState([])
+
+  const [totalSuara, setTotalSuara] = useState()
+  const [jumlahTps, setJumlahTps] = useState()
+  const [totalTps, setTotalTps] = useState()
+
+  const [golkarRi1, setGolkarRi1] = useState()
+  const [golkarRi2, setGolkarRi2] = useState()
+  const [golkarRi3, setGolkarRi3] = useState()
+  const [golkarRi4, setGolkarRi4] = useState()
+  const [golkarRi5, setGolkarRi5] = useState()
+  const [golkarRi6, setGolkarRi6] = useState()
+  const [golkarRi7, setGolkarRi7] = useState()
+  const [golkarRi8, setGolkarRi8] = useState()
+  const [golkarRi9, setGolkarRi9] = useState()
+  const [golkarRi10, setGolkarRi10] = useState()
+  const [golkarRi11, setGolkarRi11] = useState()
+
+  const [golkarProv1, setGolkarProv1] = useState()
+  const [golkarProv2, setGolkarProv2] = useState()
+  const [golkarProv3, setGolkarProv3] = useState()
+  const [golkarProv4, setGolkarProv4] = useState()
+  const [golkarProv5, setGolkarProv5] = useState()
+  const [golkarProv6, setGolkarProv6] = useState()
+  const [golkarProv7, setGolkarProv7] = useState()
+  const [golkarProv8, setGolkarProv8] = useState()
+  const [golkarProv9, setGolkarProv9] = useState()
+  const [golkarProv10, setGolkarProv10] = useState()
+  const [golkarProv11, setGolkarProv11] = useState()
   
   const [tps, setTps] = useState([])
 
@@ -77,6 +105,10 @@ export default function Home() {
       setSuaraProvinsi(res.data.suaraprov)
       // suara tps
       setTps(res.data.totaltps)
+      // total suara
+      setTotalTps(res.data.total_tps)
+      setTotalSuara(res.data.total_suara)
+      setJumlahTps(res.data.jumlah_tps)
     })
   }
 
@@ -94,6 +126,30 @@ export default function Home() {
       setKecamatanCaleg9(res.data.kecamatancaleg9)
       setKecamatanCaleg10(res.data.kecamatancaleg10)
       setKecamatanCaleg11(res.data.kecamatancaleg11)
+
+      setGolkarRi1(res.data.golkarri1)
+      setGolkarRi2(res.data.golkarri2)
+      setGolkarRi3(res.data.golkarri3)
+      setGolkarRi4(res.data.golkarri4)
+      setGolkarRi5(res.data.golkarri5)
+      setGolkarRi6(res.data.golkarri6)
+      setGolkarRi7(res.data.golkarri7)
+      setGolkarRi8(res.data.golkarri8)
+      setGolkarRi9(res.data.golkarri9)
+      setGolkarRi10(res.data.golkarri10)
+      setGolkarRi11(res.data.golkarri11)
+
+      setGolkarProv1(res.data.golkarprov1)
+      setGolkarProv2(res.data.golkarprov2)
+      setGolkarProv3(res.data.golkarprov3)
+      setGolkarProv4(res.data.golkarprov4)
+      setGolkarProv5(res.data.golkarprov5)
+      setGolkarProv6(res.data.golkarprov6)
+      setGolkarProv7(res.data.golkarprov7)
+      setGolkarProv8(res.data.golkarprov8)
+      setGolkarProv9(res.data.golkarprov9)
+      setGolkarProv10(res.data.golkarprov10)
+      setGolkarProv11(res.data.golkarprov11)
     })
   }
   
@@ -259,6 +315,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi1}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv1}</td>
+                        </tr>
                       {
                         kecamatanCaleg1.map((val, i) => (
                           <tr key={i}>
@@ -285,6 +353,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi2}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv2}</td>
+                        </tr>
                       {
                         kecamatanCaleg2.map((val, i) => (
                           <tr key={i}>
@@ -317,6 +397,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi3}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv3}</td>
+                        </tr>
                       {
                         kecamatanCaleg3.map((val, i) => (
                           <tr key={i}>
@@ -343,6 +435,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi4}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv4}</td>
+                        </tr>
                       {
                         kecamatanCaleg4.map((val, i) => (
                           <tr key={i}>
@@ -375,6 +479,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi5}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv5}</td>
+                        </tr>
                       {
                         kecamatanCaleg5.map((val, i) => (
                           <tr key={i}>
@@ -401,6 +517,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi6}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv6}</td>
+                        </tr>
                       {
                         kecamatanCaleg6.map((val, i) => (
                           <tr key={i}>
@@ -433,6 +561,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi7}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv7}</td>
+                        </tr>
                       {
                         kecamatanCaleg7.map((val, i) => (
                           <tr key={i}>
@@ -459,6 +599,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi8}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv8}</td>
+                        </tr>
                       {
                         kecamatanCaleg8.map((val, i) => (
                           <tr key={i}>
@@ -491,6 +643,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi9}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv9}</td>
+                        </tr>
                       {
                         kecamatanCaleg9.map((val, i) => (
                           <tr key={i}>
@@ -517,6 +681,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi10}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv10}</td>
+                        </tr>
                       {
                         kecamatanCaleg10.map((val, i) => (
                           <tr key={i}>
@@ -574,6 +750,18 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-left">GOLKAR RI</td>
+                          <td className="text-center">{golkarRi11}</td>
+                        </tr>
+                        <tr>
+                          <td className="text-center">0</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-left">GOLKAR PROVINSI</td>
+                          <td className="text-center">{golkarProv11}</td>
+                        </tr>
                       {
                         suaraKecamatan.map((val, i) => (
                           <tr key={i}>
@@ -619,6 +807,14 @@ export default function Home() {
                       ))
                     }
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colSpan={2} className="border border-slate-600">TOTAL</th>
+                      <th className="border border-slate-600 w-56">{totalTps}</th>
+                      <th className="border border-slate-600 w-56">{jumlahTps}</th>
+                      <th className="border border-slate-600 w-56">{totalSuara}</th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
               <div></div>
