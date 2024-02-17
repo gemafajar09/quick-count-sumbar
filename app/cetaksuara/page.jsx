@@ -111,7 +111,7 @@ export default function CetakSemua() {
         
             <div className="text-center font-bold mt-10"> CETAK DATA SUARA</div>
             <div className='mt-10 flex justify-center'>
-                <div className="grid border rounded-md shadow-xl rounded-md p-5 md:w-1/3 w-full">
+                <div className="grid border rounded-md shadow-xl p-5 md:w-1/3 w-full">
                     <div className="mt-5">
                         <label htmlFor="Nama Caleg">Entry Nama Caleg</label>
                         <Select
