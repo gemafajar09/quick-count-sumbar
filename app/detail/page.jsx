@@ -54,7 +54,7 @@ export default function Detail() {
                 MENU CETAK DATA SUARA
             </div>
 
-            <div className="grid grid-cols-6 gap-3 mt-10 justify-items-stretch">
+            <div className="grid md:grid-cols-6 gap-3 mt-10 justify-items-stretch">
                 <Link href={"/cetaksuara"} className="bg-blue-400 hover:bg-blue-300 border shadow-md rounded-md">
                     <div className="grid content-center h-24">
                         <span className="text-center text-white font-bold">
