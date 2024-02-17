@@ -2,149 +2,220 @@
 import Image from 'next/image' 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Select } from 'antd';
 
 export default function Cetak() {
 
-    const [dapil, setDapil] = useState()
     const [kecamatanId, setKecamatanId] = useState()
     const [kelurahanId, setKelurahanId] = useState()
     const [noTps, setNoTps] = useState()
+    const [pilihan, setPilihan] = useState()
     
     const [tps, setTps] = useState([])
-    const [kecamatan, setKecamatan] = useState([])
     const [kelurahan, setKelurahan] = useState([])
+    const [kecamatan, setKecamatan] = useState([])
     const [dataCaleg, setDataCaleg] = useState([])
 
-    const [title, setTitle] = useState()
-    const [dapilNama, setDapilNama] = useState()
-    const [namaKelurahan, setNamaKelurahan] = useState()
+    const [dpr, setDpr] = useState()
+    const [namaKecamatan, setNamaKecamatan] = useState()
     const [kodeTps, setKodeTps] = useState()
     const [tanggal, setTanggal] = useState()
     const [total, setTotal] = useState()
+    const [namaKelurahan, setNamaKelurahan] = useState()
 
-    var dapils = 0
-    const handleSelectChange = (e) => {
-        dapils = e
-        setDapil(e);
-        kecamatanCek()
-    };
+    var idKecamatan
+    var idKelurahan
 
-    var kecamatans = 0
-    const handleSelectChangekecamatan = (e) => {
-        kecamatans = e
-        setKecamatanId(e);
-        kelurahanCek()
+    const handlerPilihan = (e) => {
+        setPilihan(e);
+        getKecamatan()
     };
     
-    var kelurahans = 0
-    const handleSelectChangekelurahan = (e) => {
-        kelurahans = e
-        setKelurahanId(e);
-        tpsCek()
+    const handlerKecamatan = (e) => {
+        idKecamatan = e
+        setKecamatanId(e);
+        getKelurahan()
     };
-    const handleSelectChangeTps = (e) => {
+
+    const handlerKelurahan = (e) => {
+        idKelurahan = e
+        setKelurahanId(e);
+        getTPS()
+    };
+
+    const handlerTps = (e) => {
         setNoTps(e);
     };
 
-    const kecamatanCek = async () => {
+    const getKecamatan = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_URL}/kecamatan.php`)
         .then((res) => {
             setKecamatan(res.data.kecamatan)
         })
-    }
-
-    const kelurahanCek = async () => {
-        console.log(kecamatans);
-        await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataCetak.php?id=${kecamatans}`)
-        .then((res) => {
-          setKelurahan(res.data.kelurahan)
+        .catch((err) => {
+            console.log(err);
         })
     }
 
-    const tpsCek = async (id) => {
-        await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataTps.php?dapil=${dapil}&kelurahan=${kelurahans}`)
+    const getKelurahan = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_URL}/kelurahan.php?id_kecamatan=${idKecamatan}`)
         .then((res) => {
+            setKelurahan(res.data.kelurahan)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }    
+
+    const getTPS = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/tps.php?id_kecamatan=${kecamatanId}&id_kelurahan=${idKelurahan}`).then((res) => {
             setTps(res.data.tps)
+        }).catch((err) => {
+            console.log(err);
         })
     }
 
     const btnCekData = async () => {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataSuaraCalegTps.php`,{
-            "dapil" : dapil,
-            "id_kecamatan" : kecamatanId,
+        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataLaporanRiDanProvinsi.php`,{
+            "pilihan" : pilihan,
             "id_kelurahan" : kelurahanId,
+            "id_kecamatan" : kecamatanId,
             "no_tps" : noTps
         })
         .then((res) => {
             setDataCaleg(res.data.isi.suara)
-            setDapilNama(res.data.isi.nama_dapil)
-            setTitle(res.data.isi.title)
             setNamaKelurahan(res.data.isi.nama_kelurahan)
+            setNamaKecamatan(res.data.isi.nama_kecamatan)
             setKodeTps(res.data.isi.tps)
             setTanggal(res.data.isi.tanggal)
             setTotal(res.data.isi.total)
+            setDpr(res.data.isi.title)
         })
     }
+
+    const [suara, setSuara] = useState(0)
+    const [totals, setTotals] = useState(0)
+
+    const jumlahSuara = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataTotalSuara.php`)
+        .then((res) => {
+          setTotals(res.data.suara.total)
+          setSuara(res.data.suara.suara)
+        })
+    }
+
+    useEffect(() => {
+        jumlahSuara()
+    },[suara, totals])
     
     return (
-        <div className="container mx-auto p-5">
-            <div className="text-center font-bold">FORM CETAK DATA SUARA</div>
-            <div className="grid grid-cols-3 p-5">
+        <div className="pl-5 pb-5 pr-5 pt-3">
+            <div className="flex justify-between">
+                <div className="flex font-bold gap-3 items-end">
+                <Image 
+                    width={60} 
+                    height={60} 
+                    src={"/golkar.png"} 
+                    alt="image" />
+                    <div className="grid">
+                    <div className=' text-sm'>
+                    DPD GOLKAR
+                    </div>
+                    <div className=' text-xl'>
+                        Kota Padang
+                    </div>
+                    </div>
+                </div>
+                <div className="hidden md:flex text-xl justify-center mb-3 font-bold gap-3 items-end">
+                <Image width={180} height={180} src={"/mediatama.png"} alt="image" />
+                <Image width={120} height={120} src={"/digital.png"} alt="image" />
+                <Image width={150} height={150} src={"/training.png"} alt="image" />
+                </div>
+                <div className="md:flex grid justify-center items-center">
+                <span className='md:block hidden'>Total Suara Masuk :</span> 
+                <div className="text-white text-xl bg-blue-500 p-3 w-36 text-center md:rounded-l-xl rounded-t-xl">{suara}</div>
+                <div className="text-white text-xl bg-red-500 p-3 w-36 text-center md:rounded-r-xl rounded-b-xl">{totals}</div>
+                </div>
+            </div>
+            <div className="border-b-2 mt-3 border-gray-500"></div>
+            
+            <div className="text-center font-bold mt-10">FORM CETAK DATA SUARA</div>
+            <div className="grid md:grid-cols-3 p-5">
                 <div className="border p-2 rounded-l-md">
-                    <div className="grid mt-3">
-                        <label htmlFor="">Pilih Kategori</label>
-                        <select onChange={(e) => handleSelectChange(e.target.value)} value={dapil} className='rounded-md mt-3'>
-                            <option value="0">- PILIH DATA -</option>
-                            <option value="1">RI</option>
-                            <option value="2">PROVINSI</option>
+                    <div className="grid mt-5">
+                        <label htmlFor="">Pilihan</label>
+                        <select onChange={(e) => handlerPilihan(e.target.value)} value={pilihan} className='rounded-md mt-3 p-1'>
+                            <option value="0">- PILIHAN -</option>
+                            <option value="ri">DPR RI</option>
+                            <option value="prov">DPRD PROVINSI</option>
                         </select>
                     </div>
-                    <div className="grid mt-3">
-                        <label htmlFor="">Pilih KEcamatan</label>
-                        <select onChange={(e) => handleSelectChangekecamatan(e.target.value)} value={kecamatanId} className='rounded-md mt-3'>
-                            <option value="0">- PILIH KECAMATAN -</option>
-                            {
-                                kecamatan.map((val, i) => (
-                                    <option key={i} value={val.value}>{val.label}</option>
-                                ))
+                    <div className="mt-5">
+                        <label htmlFor="Nama Caleg">Entry Kecamatan</label>
+                        <Select
+                            showSearch
+                            popupMatchSelectWidth={false}
+                            listHeight={250}
+                            className='w-full mt-3'
+                            value={kecamatanId}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
+                            filterSort={(optionA, optionB) => {
+                                optionA?.label.toLowerCase().localeCompare(optionB?.label.toLowerCase())
                             }
-                        </select>
+                            }
+                            onChange={handlerKecamatan}
+                            options={kecamatan} />
                     </div>
-                    <div className="grid mt-3">
-                        <label htmlFor="">Pilih Kelurahan</label>
-                        <select onChange={(e) => handleSelectChangekelurahan(e.target.value)} value={kelurahanId} className='rounded-md mt-3'>
-                            <option value="0">- PILIH KELURAHAN -</option>
-                            {
-                                kelurahan.map((val, i) => (
-                                    <option key={i} value={val.id}>{val.nama_kelurahan}</option>
-                                ))
-                            }
-                        </select>
+                    <div className="mt-5">
+                        <label htmlFor="Kelurahan">Entry Kelurahan</label>
+
+                        <Select
+                            showSearch
+                            popupMatchSelectWidth={false}
+                            listHeight={250}
+                            className='w-full mt-3'
+                            value={kelurahanId}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
+                            filterSort={(optionA, optionB) => {
+                                optionA?.label.toLowerCase().localeCompare(optionB?.label.toLowerCase())
+                            }}
+                            onChange={handlerKelurahan}
+                            options={kelurahan} />
+
                     </div>
-                    <div className="grid mt-3">
-                        <label htmlFor="">Pilih TPS</label>
-                        <select onChange={(e) => handleSelectChangeTps(e.target.value)} value={noTps} className='rounded-md mt-3'>
-                            <option value="0">-PILIH TPS-</option>
-                            {
-                                tps.map((val, i) => (
-                                    <option key={i} value={val.no_tps}>{val.no_tps}</option>
-                                ))
-                            }
-                        </select>
+                    <div className="mt-5">
+                        <label htmlFor="Kelurahan">Entry TPS</label>
+
+                        <Select
+                            showSearch
+                            popupMatchSelectWidth={false}
+                            listHeight={250}
+                            className='w-full mt-3'
+                            value={noTps}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
+                            filterSort={(optionA, optionB) => {
+                                optionA?.label.toLowerCase().localeCompare(optionB?.label.toLowerCase())
+                            }}
+                            onChange={handlerTps}
+                            options={tps} />
+
                     </div>
                     <div className="flex justify-end mt-5">
                         <button onClick={(_) => btnCekData()} className="w-1/2 bg-yellow-300 hover:bg-yellow-200 p-2 text-white rounded-md">Cek Data</button>
                     </div>
                 </div>
-                <div className="col-span-2 border p-2 rounded-r-md">
+                <div className="md:col-span-2 border p-2 rounded-r-md">
                     <div className='flex justify-center'>
                         <Image src={"/golkar.png"} width={100} height={100} alt="golkar"/>
                     </div>
                     <div className="grid mt-3">
-                        <span className='text-center'>{title ?? "......"}</span>
-                        <span className='text-center'>{ dapilNama ?? "......"}</span>
-                        <span className='text-center'>{ namaKelurahan ?? "........"}</span>
+                        <span className='text-center'>PEROLEHAN SUARA {dpr} KOTA PADANG</span>
+                        <span className='text-center'>{ namaKecamatan ?? "......"}</span>
+                        <span className='text-center'>{ namaKelurahan ?? "......."}</span>
                     </div>
                     <table className="table w-full mt-3 border-collapse border border-slate-500">
                         <thead>
@@ -190,7 +261,7 @@ export default function Cetak() {
                     </div>
 
                     <div className="flex justify-center mt-5">
-                        <a href={`laporan/${dapil}/${kecamatanId}/${kelurahanId}/${noTps}`} target='_blank' className="w-1/2 bg-blue-400 hover:bg-blue-200 p-2 rounded-md text-white">Donwload PDF</a>
+                        <a href={`laporan/${pilihan}/${kecamatanId}/${kelurahanId}/${noTps}`} target='_blank' className="w-1/2 bg-blue-400 hover:bg-blue-200 p-2 rounded-md text-white">Donwload PDF</a>
                     </div>
                 </div>
             </div>

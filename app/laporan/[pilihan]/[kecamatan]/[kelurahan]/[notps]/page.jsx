@@ -7,12 +7,12 @@ import { useParams } from 'next/navigation'
 export default function Laporan() {
     const [dataCaleg, setDataCaleg] = useState([])
 
-    const [title, setTitle] = useState()
-    const [dapilNama, setDapilNama] = useState()
-    const [namaKelurahan, setNamaKelurahan] = useState()
+    const [dpr, setDpr] = useState()
+    const [namaKecamatan, setNamaKecamatan] = useState()
     const [kodeTps, setKodeTps] = useState()
     const [tanggal, setTanggal] = useState()
     const [total, setTotal] = useState()
+    const [namaKelurahan, setNamaKelurahan] = useState()
 
     const params = useParams();
     console.log(params.tps);
@@ -22,20 +22,20 @@ export default function Laporan() {
 
     const btnCekData = async () => {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataSuaraCalegTps.php`,{
-            "dapil" : params.dapil,
-            "id_kecamatan" : params.kecamatanid,
-            "id_kelurahan" : params.kelurahanid,
-            "no_tps" : params.tps
+        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataLaporanRiDanProvinsi.php`,{
+            "pilihan" : params.pilihan,
+            "id_kelurahan" : params.kelurahan,
+            "id_kecamatan" : params.kecamatan,
+            "no_tps" : params.notps
         })
         .then((res) => {
             setDataCaleg(res.data.isi.suara)
-            setDapilNama(res.data.isi.nama_dapil)
-            setTitle(res.data.isi.title)
             setNamaKelurahan(res.data.isi.nama_kelurahan)
+            setNamaKecamatan(res.data.isi.nama_kecamatan)
             setKodeTps(res.data.isi.tps)
             setTanggal(res.data.isi.tanggal)
             setTotal(res.data.isi.total)
+            setDpr(res.data.isi.title)
 
             setTimeout(() => {
                 console.log("print!");
@@ -50,9 +50,11 @@ export default function Laporan() {
                 <Image src={"/golkar.png"} width={100} height={100} alt="golkar"/>
             </div>
             <div className="grid mt-3">
-                <span className='text-center'>{title ?? "......"}</span>
-                <span className='text-center'>{ dapilNama ?? "......"}</span>
-                <span className='text-center'>{ namaKelurahan ?? "........"}</span>
+            <div className="grid mt-3">
+                <span className='text-center'>PEROLEHAN SUARA {dpr} KOTA PADANG</span>
+                <span className='text-center'>{ namaKecamatan ?? "......"}</span>
+                <span className='text-center'>{ namaKelurahan ?? "......."}</span>
+            </div>
             </div>
             <table className="table w-full mt-3 border-collapse border border-slate-500">
                 <thead>
@@ -79,7 +81,7 @@ export default function Laporan() {
                 <tfoot>
                     <tr>
                         <td className='border border-slate-600 text-center' colSpan={3}>TOTAL SUARA</td>
-                        <td className='border border-slate-600 text-center'>{total}</td>
+                        <td className='border border-slate-600 text-center'>{ total ?? 0}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -96,6 +98,7 @@ export default function Laporan() {
                     <span className='mt-16 text-center'>..................................</span>
                 </div>
             </div>
+
         </div>
     )
 }

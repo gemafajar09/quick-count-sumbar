@@ -55,6 +55,13 @@ export default function Detail() {
             </div>
 
             <div className="grid md:grid-cols-6 gap-3 mt-10 justify-items-stretch">
+                <Link href={"/cetak"} className="bg-blue-400 hover:bg-blue-300 border shadow-md rounded-md">
+                    <div className="grid content-center h-24">
+                        <span className="text-center text-white font-bold">
+                            Cetak Data Suara Caleg
+                        </span>
+                    </div>
+                </Link>
                 <Link href={"/cetaksuara"} className="bg-blue-400 hover:bg-blue-300 border shadow-md rounded-md">
                     <div className="grid content-center h-24">
                         <span className="text-center text-white font-bold">
