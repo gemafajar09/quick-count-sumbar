@@ -161,11 +161,11 @@ export default function Home() {
           <Image 
             width={60} 
             height={60} 
-            src={"/logo.png"} 
+            src={"/golkar.png"} 
             alt="image" />
             <div className="grid">
               <div className=' text-sm'>
-                Aplikasi Quick Count
+              DPD GOLKAR
               </div>
               <div className=' text-xl'>
                 Kota Padang

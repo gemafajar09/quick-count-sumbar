@@ -9,10 +9,12 @@ export default function CetakSemua() {
     const [idcaleg, setIdcaleg] = useState("")
     const [idKecamatan, setIdKecamatan] = useState("")
     const [idkelurahan, setIdkelurahan] = useState("")
+    const [noTps, setNoTps] = useState("")
 
     const [caleg, setCaleg] = useState([])
     const [kecamatan, setKecamatan] = useState([])
     const [kelurahan, setKelurahan] = useState([])
+    const [tps, setTps] = useState([])
 
     const [suara, setSuara] = useState(0)
     const [total, setTotal] = useState(0)
@@ -28,13 +30,35 @@ export default function CetakSemua() {
             setSuara(res.data.suara.suara)
         })
     }
+
     
     var idKecamatans
+    var idKelurahan
 
     useEffect(() => {
         getNamaCaleg()
         getKecamatan()
     },[])
+
+    const handlerCaleg = (e) => {
+        setIdcaleg(e);
+    };
+    
+    const handlerKecamatan = (e) => {
+        idKecamatans = e
+        setIdKecamatan(e);
+        getKelurahan()
+    };
+
+    const handlerKelurahan = (e) => {
+        idKelurahan = e
+        setIdkelurahan(e);
+        getTPS()
+    };
+
+    const handlerTps = (e) => {
+        setNoTps(e);
+    };
 
     const getNamaCaleg = async () => {
         await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/caleg.php`).then((res) => {
@@ -64,19 +88,15 @@ export default function CetakSemua() {
         })
     }
 
-    const handlerCaleg = (e) => {
-        setIdcaleg(e);
-    };
-    
-    const handlerKecamatan = (e) => {
-        idKecamatans = e
-        setIdKecamatan(e);
-        getKelurahan()
-    };
+    const getTPS = async () => {
+        await axios.get(`${process.env.NEXT_PUBLIC_URL}/dashboard/tps.php?id_kecamatan=${idKecamatan}&id_kelurahan=${idKelurahan}`).then((res) => {
+            setTps(res.data.tps)
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
 
-    const handlerKelurahan = (e) => {
-        setIdkelurahan(e);
-    };
+    
 
     return (
         <div className="pl-5 pb-5 pr-5 pt-3">
@@ -108,10 +128,9 @@ export default function CetakSemua() {
                 </div>
             </div>
             <div className="border-b-2 mt-3 border-gray-500"></div>
-        
-            <div className="text-center font-bold mt-10"> CETAK DATA SUARA</div>
+            <div className="text-center font-bold mt-10"> CETAK DATA SUARA PER TPS</div>
             <div className='mt-10 flex justify-center'>
-                <div className="grid border rounded-md shadow-xl rounded-md p-5 md:w-1/3 w-full">
+                <div className="grid border rounded-md shadow-xl p-5 md:w-1/3 w-full">
                     <div className="mt-5">
                         <label htmlFor="Nama Caleg">Entry Nama Caleg</label>
                         <Select
@@ -154,7 +173,7 @@ export default function CetakSemua() {
                             popupMatchSelectWidth={false}
                             listHeight={250}
                             className='w-full mt-3'
-                            value={idkelurahan}
+                            value={idKelurahan}
                             optionFilterProp="children"
                             filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
                             filterSort={(optionA, optionB) => {
@@ -164,9 +183,27 @@ export default function CetakSemua() {
                             options={kelurahan} />
 
                     </div>
+                    <div className="mt-5">
+                        <label htmlFor="Kelurahan">Entry TPS</label>
+
+                        <Select
+                            showSearch
+                            popupMatchSelectWidth={false}
+                            listHeight={250}
+                            className='w-full mt-3'
+                            value={noTps}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => option?.label.toLowerCase().includes(input)}
+                            filterSort={(optionA, optionB) => {
+                                optionA?.label.toLowerCase().localeCompare(optionB?.label.toLowerCase())
+                            }}
+                            onChange={handlerTps}
+                            options={tps} />
+
+                    </div>
 
                     <div className="mt-5 flex justify-end">
-                        <a href={`/laporansuara/${idcaleg}/${idKecamatan}/${idkelurahan}`} target="_blank" className="p-2 w-1/3 text-center rounded-md bg-blue-500 hover:bg-blue-300 text-white">Cetak</a>
+                        <a href={`/laporansuaratps/${idcaleg}/${idKecamatan}/${idkelurahan}/${noTps}`} target="_blank" className="p-2 w-1/3 text-center rounded-md bg-blue-500 hover:bg-blue-300 text-white">Cetak</a>
                     </div>
 
                 </div>

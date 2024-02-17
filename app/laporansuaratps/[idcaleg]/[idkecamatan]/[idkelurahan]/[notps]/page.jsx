@@ -19,10 +19,11 @@ export default function Laporansuara() {
 
     const btnCekData = async () => {
 
-        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataLaporanCaleg.php`,{
+        await axios.post(`${process.env.NEXT_PUBLIC_URL}/dashboard/getDataLaporanCalegTps.php`,{
             "id_caleg" : params.idcaleg,
             "id_kelurahan" : params.idkelurahan,
-            "id_kecamatan" : params.idkecamatan
+            "id_kecamatan" : params.idkecamatan,
+            "no_tps" : params.notps,
         })
         .then((res) => {
             setDataCaleg(res.data.suara)
@@ -71,7 +72,7 @@ export default function Laporansuara() {
                 <tfoot>
                     <tr>
                         <th className='border border-slate-600' colSpan={2}>TOTAL</th>
-                        <th className='border border-slate-600'>{totalTps + 1}</th>
+                        <th className='border border-slate-600'>{totalTps + 1 }</th>
                         <th className='border border-slate-600'>{totalSuara}</th>
                     </tr>
                 </tfoot>
